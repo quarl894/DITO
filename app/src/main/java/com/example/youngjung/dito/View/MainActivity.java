@@ -1,5 +1,6 @@
 package com.example.youngjung.dito.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.example.youngjung.dito.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionMenu fab_btn;
@@ -105,5 +108,10 @@ public class MainActivity extends AppCompatActivity {
             fab_join.setVisibility(View.INVISIBLE);
             open = true;
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }

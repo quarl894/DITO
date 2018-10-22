@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.youngjung.dito.BaseActivity;
+import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.R;
 import com.kakao.auth.ApiResponseCallback;
 import com.kakao.auth.AuthService;
@@ -37,6 +38,7 @@ public class LoginActivity extends BaseActivity {
     Context context;
     private SessionCallback callback;
     boolean check_input_INFO = false;     // 로그인 기록이 있으면
+    TextView tv_login;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +47,13 @@ public class LoginActivity extends BaseActivity {
         context = getApplicationContext();
         String str =getKeyHash(context);
         Log.e("key: ", str);
+
+        tv_login = findViewById(R.id.tv_login);
+
+        tv_login.setHeight(DefaultAppliction.dpToPx(24));
+        tv_login.setWidth(DefaultAppliction.dpToPx(182));
+
+
         googleBtnUi();
         callback = new SessionCallback();
         Session.getCurrentSession().addCallback(callback);

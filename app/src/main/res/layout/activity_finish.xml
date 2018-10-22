@@ -32,7 +32,6 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#0f0f0f"
-            android:lineSpacingExtra="13sp"
             android:gravity="center_horizontal"
             android:text="마케팅 커뮤니케이션 과목
 &apos;마커팀플 2팀&apos; 방이 생성되었습니다!

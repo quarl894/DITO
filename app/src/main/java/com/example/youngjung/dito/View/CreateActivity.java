@@ -1,5 +1,6 @@
 package com.example.youngjung.dito.View;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.R;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class CreateActivity extends BaseActivity {
     Toolbar toolbar;
@@ -41,6 +44,7 @@ public class CreateActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_finish.setBackgroundColor(getResources().getColor(R.color.very_light_pink));
+
 
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,5 +117,10 @@ public class CreateActivity extends BaseActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 }
