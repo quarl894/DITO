@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.youngjung.dito">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.example.youngjung.dito.DefaultAppliction"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
+
+        <activity android:name="com.example.youngjung.dito.View.MainActivity">
+
+        </activity>
+        <activity android:name="com.example.youngjung.dito.Login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.example.youngjung.dito.Login.KaKaoSignupActivity"/>
+        <activity android:name="com.example.youngjung.dito.View.CreateActivity"/>
+        <activity android:name=".View.SettingActivity"/>
+        <activity android:name=".View.FinishActivity"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_login_activity"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_splash">
+
+    <ImageView
+        android:id="@+id/img_logo"
+        android:layout_width="147dp"
+        android:layout_height="61dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="147dp"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="225dp"
+        android:gravity="center_horizontal"
+        android:letterSpacing="-0.02"
+        android:lineSpacingExtra="4sp"
+        android:text="모두의 팀플 Do it together!"
+        android:textColor="#0f0f0f"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_log"
+        android:background="@drawable/btn_login_kakao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="68dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"/>
+    <com.kakao.usermgmt.LoginButton
+        android:id="@+id/btn_login"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="68dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"/>
+</RelativeLayout>
