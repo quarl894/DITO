@@ -50,8 +50,6 @@ public class LoginActivity extends BaseActivity {
         Session.getCurrentSession().addCallback(callback);
         Session.getCurrentSession().checkAndImplicitOpen();
 
-
-
     }
 
     @Override
