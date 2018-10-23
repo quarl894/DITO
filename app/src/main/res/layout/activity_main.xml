@@ -6,12 +6,8 @@
     android:layout_height="match_parent"
     tools:context="com.example.youngjung.dito.View.MainActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:background="@color/white" />
+    <include layout="@layout/toolbar"
+        android:id="@+id/include_layout" />
 
     <TextView
         android:id="@+id/tv_main"
@@ -62,8 +58,9 @@
             android:layout_gravity="bottom|right"
             android:layout_marginBottom="8dp"
             android:layout_marginRight="8dp"
+            android:scaleType="fitXY"
             android:src="@drawable/btn_make"
-            app:fab_label="만들기"/>
+            app:fab_label="만들기" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

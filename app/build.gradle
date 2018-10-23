@@ -31,6 +31,8 @@ dependencies {
     //floating button
     implementation 'com.github.clans:fab:1.6.4'
 
+    //view
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
     //graph
     //implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 

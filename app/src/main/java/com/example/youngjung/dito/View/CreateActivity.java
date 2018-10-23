@@ -30,12 +30,15 @@ public class CreateActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
-        toolbar = findViewById(R.id.toolbar);
+        View include = findViewById(R.id.include_layout);
+
+        toolbar = include.findViewById(R.id.toolbar);
         btn_finish = findViewById(R.id.btn_finish);
         r_name = findViewById(R.id.edit_room_name);
         sub_name = findViewById(R.id.edit_sub_name);
 
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundResource(R.color.yello);
 
         getSupportActionBar().setTitle(null);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

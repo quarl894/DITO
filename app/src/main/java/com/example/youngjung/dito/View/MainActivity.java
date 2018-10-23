@@ -36,10 +36,13 @@ public class MainActivity extends AppCompatActivity {
         back = findViewById(R.id.back);
         tv_main = findViewById(R.id.tv_main);
 
+        View incloude1 = findViewById(R.id.include_layout);
+        toolbar = incloude1.findViewById(R.id.toolbar);
+
         tv_main.setText("팀플방에 참여하거나 \n 새로운 팀플방을 직접 만들어보세요!");
         tv_main.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-        toolbar = findViewById(R.id.toolbar);
+        //toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle(null);
