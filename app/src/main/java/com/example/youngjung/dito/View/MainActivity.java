@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionMenu fab_btn;
     FloatingActionButton fab_join; //참여하기
     FloatingActionButton fab_create; //생성하기
-    View back;
+   // View back;
     boolean open = true;
     Toolbar toolbar;
     TextView tv_main;
+    FrameLayout main_frame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +38,10 @@ public class MainActivity extends AppCompatActivity {
         fab_btn = findViewById(R.id.fab_btn);
         fab_join = findViewById(R.id.fab_item1);
         fab_create = findViewById(R.id.fab_item2);
-        back = findViewById(R.id.back);
+    //    back = findViewById(R.id.back);
         tv_main = findViewById(R.id.tv_main);
+        main_frame = findViewById(R.id.main_frame);
+
 
         View incloude1 = findViewById(R.id.include_layout);
         toolbar = incloude1.findViewById(R.id.toolbar);
@@ -45,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
         tv_main.setText("팀플방에 참여하거나 \n 새로운 팀플방을 직접 만들어보세요!");
         tv_main.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-        //toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle(null);
         toolbar.setLogo(R.drawable.logo);
 
         toolbar.bringToFront();
+
+        main_frame.setBackgroundResource(R.color.transport2);
 
         fab_btn.setOnMenuButtonClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +75,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-
-
+    @Override
+    protected void onResume() {
+        //뒤로 돌아왔을 때 fab 원복
+        open = false;
+        fab();
+        super.onResume();
     }
 
     @Override
@@ -97,16 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void fab(){
         if(open){
-          //  fab_btn.setClickable(false);
-            back.setVisibility(View.VISIBLE);
+            main_frame.setBackgroundResource(R.color.transport);
             fab_btn.bringToFront();
             fab_create.setVisibility(View.VISIBLE);
             fab_join.setVisibility(View.VISIBLE);
             open = false;
         }else{
-           // fab_btn.setClickable(true);
+            main_frame.setBackgroundResource(R.color.transport2);
             fab_btn.bringToFront();
-            back.setVisibility(View.GONE);
             fab_create.setVisibility(View.INVISIBLE);
             fab_join.setVisibility(View.INVISIBLE);
             open = true;
