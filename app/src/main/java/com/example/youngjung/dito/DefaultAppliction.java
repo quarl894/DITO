@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.Window;
 
 import com.example.youngjung.dito.Adapter.KakaoSDKAdapter;
 import com.kakao.auth.KakaoSDK;
@@ -14,6 +16,7 @@ public class DefaultAppliction extends Application {
     private static DefaultAppliction instance = null;
     private static volatile Activity currentActivity = null;
     private static Context context;
+    private static String master;
 
     @Override
     public void onCreate() {
@@ -57,6 +60,15 @@ public class DefaultAppliction extends Application {
 
         int px = Math.round((float) dp * density);
         return px;
+    }
+
+    public static String m_name(String m){
+        master = m;
+        return master;
+    }
+
+    public static String name(){
+        return m_name(master);
     }
 
 

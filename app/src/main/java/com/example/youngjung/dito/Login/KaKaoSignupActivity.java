@@ -5,6 +5,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.youngjung.dito.BaseActivity;
+import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.member;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.network.ErrorResult;
 import com.kakao.usermgmt.ApiErrorCode;
 import com.kakao.usermgmt.UserManagement;
@@ -14,9 +19,14 @@ import com.kakao.util.OptionalBoolean;
 import com.kakao.util.helper.log.Logger;
 
 public class KaKaoSignupActivity extends BaseActivity {
+    //firebase
+    private DatabaseReference databaseReference;
+    com.example.youngjung.dito.Model.member member;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         requestMe();
     }
 
@@ -47,9 +57,21 @@ public class KaKaoSignupActivity extends BaseActivity {
                     Log.e("login fail"," fail");
                     //showSignup();
                 } else {
+                    String id = String.valueOf(result.getId());
+                    String nick = result.getNickname();
+                    String img = result.getThumbnailImagePath();
+
+                    DefaultAppliction.m_name(id);
+                    member = new member(id,nick,img);
+                    save_profile(member);
                     redirectMainActivity();
                 }
             }
         });
+    }
+
+    // Profile 저장.
+    private void save_profile(member m){
+        databaseReference.child("profile").child(m.getId()).setValue(m);
     }
 }
