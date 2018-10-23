@@ -19,6 +19,9 @@ import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -26,11 +29,11 @@ public class MainActivity extends BaseActivity {
     FloatingActionMenu fab_btn;
     FloatingActionButton fab_join; //참여하기
     FloatingActionButton fab_create; //생성하기
-   // View back;
     boolean open = true;
     Toolbar toolbar;
     TextView tv_main;
     FrameLayout main_frame;
+    //firebase
 
 
     @Override
@@ -55,10 +58,8 @@ public class MainActivity extends BaseActivity {
         tv_main.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setTitle(null);
         toolbar.setLogo(R.drawable.logo);
-
         toolbar.bringToFront();
 
         main_frame.setBackgroundResource(R.color.transport2);
@@ -67,8 +68,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 fab();
-//                fab(fab_btn.isOpened());
-//                chk = true;
             }
         });
 
