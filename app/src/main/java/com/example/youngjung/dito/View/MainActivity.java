@@ -10,17 +10,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.R;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     FloatingActionMenu fab_btn;
     FloatingActionButton fab_join; //참여하기
     FloatingActionButton fab_create; //생성하기
@@ -30,10 +32,13 @@ public class MainActivity extends AppCompatActivity {
     TextView tv_main;
     FrameLayout main_frame;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //status bar text 색 변경
+        statusbar();
 
         fab_btn = findViewById(R.id.fab_btn);
         fab_join = findViewById(R.id.fab_item1);
@@ -125,4 +130,6 @@ public class MainActivity extends AppCompatActivity {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
+
+
 }

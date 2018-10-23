@@ -25,6 +25,7 @@ public class CreateActivity extends BaseActivity {
     Button btn_finish;
     EditText r_name;
     EditText sub_name;
+    TextView title_bar;
     int chk1 = 0;
     int chk2 = 0;
     boolean ok = false;
@@ -32,7 +33,7 @@ public class CreateActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
-
+        statusbar();
         View include = findViewById(R.id.include_layout);
 
         toolbar = include.findViewById(R.id.toolbar);
@@ -42,8 +43,11 @@ public class CreateActivity extends BaseActivity {
 
         setSupportActionBar(toolbar);
         toolbar.setBackgroundResource(R.color.yello);
+        title_bar = findViewById(R.id.toolbar_title);
 
-        getSupportActionBar().setTitle(null);
+//        title_bar.setText("새 팀플 만들기");
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btn_finish.setBackgroundColor(getResources().getColor(R.color.very_light_pink));
