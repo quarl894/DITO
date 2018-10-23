@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.youngjung.dito.BaseActivity;
+import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.member;
 
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,7 @@ public class KaKaoSignupActivity extends BaseActivity {
                     String nick = result.getNickname();
                     String img = result.getThumbnailImagePath();
 
+                    DefaultAppliction.m_name(id);
                     member = new member(id,nick,img);
                     save_profile(member);
                     redirectMainActivity();

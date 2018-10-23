@@ -44,6 +44,14 @@
             android:text="초대링크 복사"
             android:gravity="center"/>
 
+        <TextView
+            android:layout_marginTop="30dp"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_key"/>
+
     </LinearLayout>
     <Button
         android:layout_alignBottom="@+id/linear"

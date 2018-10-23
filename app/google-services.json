@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "66865509012",
+    "firebase_url": "https://dito-4b920.firebaseio.com",
+    "project_id": "dito-4b920",
+    "storage_bucket": "dito-4b920.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66865509012:android:784a9489fbf7bd26",
+        "android_client_info": {
+          "package_name": "com.example.youngjung.dito"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66865509012-ejgah4mln5hcf9somiblbo89018072lg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJmexTWfCEuFo68w6H9uM18WKFrtdiwzQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

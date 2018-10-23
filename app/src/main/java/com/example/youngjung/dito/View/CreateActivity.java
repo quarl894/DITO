@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.youngjung.dito.BaseActivity;
+import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.member;
+import com.example.youngjung.dito.Model.room;
 import com.example.youngjung.dito.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -29,6 +42,12 @@ public class CreateActivity extends BaseActivity {
     int chk1 = 0;
     int chk2 = 0;
     boolean ok = false;
+    room info;
+    private DatabaseReference databaseReference;
+    ArrayList<member> parti;
+    ArrayList<String> hw;
+    final String master = DefaultAppliction.name();
+    String str ="no";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +63,11 @@ public class CreateActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         toolbar.setBackgroundResource(R.color.yello);
         title_bar = findViewById(R.id.toolbar_title);
+        parti = new ArrayList<>();
+        hw = new ArrayList<>();
 
-//        title_bar.setText("새 팀플 만들기");
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -56,12 +78,13 @@ public class CreateActivity extends BaseActivity {
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String room = r_name.getText().toString();
+                String r = r_name.getText().toString();
                 String sub = sub_name.getText().toString();
                 if(ok) {
-                    Intent i = new Intent(CreateActivity.this, FinishActivity.class);
-                    startActivity(i);
-                    finish();
+                    // 방 생성
+                    info = new room(r,sub,parti,hw);
+                    databaseReference.child("room").child(master).push().setValue(new room(info.getR_name(), info.getS_name(),info.getParticipant(), info.getHomework()));
+                    find();
                 }else{
                     Toast.makeText(getApplicationContext(),"이름과 과목을 작성해주세요.",Toast.LENGTH_SHORT).show();
                 }
@@ -114,6 +137,42 @@ public class CreateActivity extends BaseActivity {
             }
         });
     }
+
+    //초대링크 만들어서 저장 및 보내기.
+    public String find(){
+        // 방금 업뎃된거 가져오기
+        Query q = databaseReference.child("room").child(master).limitToLast(1);
+
+        q.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                final String k =dataSnapshot.getKey();
+                Intent i = new Intent(CreateActivity.this, FinishActivity.class);
+
+                i.putExtra("key",k);
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+        return str;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
