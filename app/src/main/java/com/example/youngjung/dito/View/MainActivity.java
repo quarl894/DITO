@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,8 +32,9 @@ public class MainActivity extends BaseActivity {
     FloatingActionButton fab_create; //생성하기
     boolean open = true;
     Toolbar toolbar;
-    TextView tv_main;
+    TextView tv_main, tv_main2;
     FrameLayout main_frame;
+    LinearLayout linear;
     //firebase
 
 
@@ -48,14 +50,18 @@ public class MainActivity extends BaseActivity {
         fab_create = findViewById(R.id.fab_item2);
     //    back = findViewById(R.id.back);
         tv_main = findViewById(R.id.tv_main);
+        tv_main2 = findViewById(R.id.tv_main2);
         main_frame = findViewById(R.id.main_frame);
 
 
         View incloude1 = findViewById(R.id.include_layout);
         toolbar = incloude1.findViewById(R.id.toolbar);
+        linear = findViewById(R.id.linear);
 
-        tv_main.setText("팀플방에 참여하거나 \n 새로운 팀플방을 직접 만들어보세요!");
-        tv_main.setGravity(View.TEXT_ALIGNMENT_CENTER);
+       // linear.setPadding(0,120,0,0);
+
+        tv_main.setText("팀플방에 참여하거나");
+        tv_main2.setText("새로운 팀플방을 직접 만들어보세요!");
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
