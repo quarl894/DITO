@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/dialog_linear"
+    android:orientation="vertical"
+    android:background="@drawable/box_code"
+    android:paddingHorizontal="30dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@color/black_high"
+        android:id="@+id/tv"
+        android:text="팀플코드"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edit"
+        android:textSize="18sp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp">
+        <Button
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/btn_cancle"
+            android:background="@color/transport2"
+            android:layout_marginRight="30dp"
+            android:text="취소"/>
+
+        <Button
+            android:layout_width="32dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:id="@+id/btn_ok"
+            android:background="@color/transport2"
+            android:lineSpacingExtra="11sp"
+            android:text="확인"/>
+    </LinearLayout>
+
+</LinearLayout>

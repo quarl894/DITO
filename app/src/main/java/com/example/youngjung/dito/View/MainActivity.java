@@ -5,19 +5,24 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.youngjung.dito.BaseActivity;
+import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.R;
+import com.example.youngjung.dito.ui.CustomDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +40,7 @@ public class MainActivity extends BaseActivity {
     TextView tv_main, tv_main2;
     FrameLayout main_frame;
     LinearLayout linear;
+    CustomDialog cd;
     //firebase
 
 
@@ -82,6 +88,14 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 Intent i =new Intent(MainActivity.this, CreateActivity.class);
                 startActivity(i);
+            }
+        });
+
+        fab_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog();
+                fab();
             }
         });
 
@@ -134,6 +148,20 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    public void Dialog(){
+//        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics(); //디바이스 화면크기를 구하기위해
+//        int width = dm.widthPixels; //디바이스 화면 너비
+//        int height = dm.heightPixels; //디바이스 화면 높이
+
+        cd = new CustomDialog(this);
+        WindowManager.LayoutParams wm = cd.getWindow().getAttributes();  //다이얼로그의 높이 너비 설정하기위해
+        wm.copyFrom(cd.getWindow().getAttributes());  //여기서 설정한값을 그대로 다이얼로그에 넣겠다는의미
+
+        wm.x = View.TEXT_ALIGNMENT_CENTER;
+        wm.y = View.TEXT_ALIGNMENT_CENTER;
+        cd.show();
     }
 
 
