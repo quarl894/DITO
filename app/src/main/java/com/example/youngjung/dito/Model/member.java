@@ -9,6 +9,9 @@ public class member {
     private String subnail;
     private ArrayList<String> room_key;
 
+    public member() {
+    }
+
     public member(String id, String name, String subnail) {
         this.id = id;
         this.name = name;

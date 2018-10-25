@@ -11,6 +11,9 @@ public class Info {
     private int img2;
     private int img3;
 
+    public Info() {
+    }
+
     public Info(String r_name, String s_name, String cnt, int img_master, int img1, int img2, int img3) {
         this.r_name = r_name;
         this.s_name = s_name;

@@ -12,7 +12,6 @@ import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<Info> roomList;

@@ -26,12 +26,17 @@ import com.example.youngjung.dito.Adapter.RoomAdapter;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
+import com.example.youngjung.dito.Model.room;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.ui.CustomDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.ArrayList;
@@ -52,8 +57,10 @@ public class MainActivity extends BaseActivity {
     RecyclerView.LayoutManager mlayoutManager;
     //firebase
     DatabaseReference databaseReference;
-    ArrayList<Info> test;
-
+    ArrayList<Info> test = new ArrayList<>();
+    String a = "aaa";
+    static ArrayList<Info> tmp = new ArrayList<>();
+    boolean ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,16 +87,55 @@ public class MainActivity extends BaseActivity {
         mlayoutManager = new LinearLayoutManager(this);
         main_room.setLayoutManager(mlayoutManager);
 
-        test = new ArrayList<>();
+        //DB 불러오기
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference ref = databaseReference.child("room");
+
+        // model 생성자 초기화 안만들어주면 firebase 에러남. 꼭 만들어주기.(빈 생성자)
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Iterable<DataSnapshot> child = dataSnapshot.getChildren();
+                for(DataSnapshot contact : child){
+                    room rf = contact.getValue(room.class);
+                    ok = true;
+                   // Log.e("what:: ", rf.getR_name());
+                    test.add(new Info(rf.getR_name(), rf.getS_name(), "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        // 임시로 해놓음. 고쳐야함.
         for(int i=0; i<5; i++) {
             test.add(new Info("마케팅 팀플 2팀", "마케팅 커뮤니케이션", "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
         }
+        Log.e("aaa: ",Integer.toString(test.size()));
        // linear.setPadding(0,120,0,0);
         tv_main.setText("팀플방에 참여하거나");
         tv_main2.setText("새로운 팀플방을 직접 만들어보세요!");
         // chk는 DB에 방이 있는지 없는지 확인 작업.
         boolean chk = true;
-        if(!chk){
+        if(test.size()!=0){
             main_room.setVisibility(View.VISIBLE);
             tv_main.setVisibility(View.GONE);
             tv_main2.setVisibility(View.GONE);
