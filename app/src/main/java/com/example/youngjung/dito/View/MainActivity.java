@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,12 +17,15 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.youngjung.dito.Adapter.RoomAdapter;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.ui.CustomDialog;
 import com.github.clans.fab.FloatingActionButton;
@@ -28,6 +33,8 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
+import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -41,7 +48,11 @@ public class MainActivity extends BaseActivity {
     FrameLayout main_frame;
     LinearLayout linear;
     CustomDialog cd;
+    ImageView back;
+    RecyclerView.LayoutManager mlayoutManager;
     //firebase
+    DatabaseReference databaseReference;
+    ArrayList<Info> test;
 
 
     @Override
@@ -54,21 +65,44 @@ public class MainActivity extends BaseActivity {
         fab_btn = findViewById(R.id.fab_btn);
         fab_join = findViewById(R.id.fab_item1);
         fab_create = findViewById(R.id.fab_item2);
-    //    back = findViewById(R.id.back);
         tv_main = findViewById(R.id.tv_main);
         tv_main2 = findViewById(R.id.tv_main2);
         main_frame = findViewById(R.id.main_frame);
-
+        back = findViewById(R.id.back);
 
         View incloude1 = findViewById(R.id.include_layout);
         toolbar = incloude1.findViewById(R.id.toolbar);
         linear = findViewById(R.id.linear);
 
-       // linear.setPadding(0,120,0,0);
+      //  View main_room = findViewById(R.id.true_room);
+        RecyclerView main_room = findViewById(R.id.true_room);
+        main_room.setHasFixedSize(true);
+        mlayoutManager = new LinearLayoutManager(this);
+        main_room.setLayoutManager(mlayoutManager);
 
+        test = new ArrayList<>();
+        for(int i=0; i<5; i++) {
+            test.add(new Info("마케팅 팀플 2팀", "마케팅 커뮤니케이션", "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
+        }
+       // linear.setPadding(0,120,0,0);
         tv_main.setText("팀플방에 참여하거나");
         tv_main2.setText("새로운 팀플방을 직접 만들어보세요!");
+        // chk는 DB에 방이 있는지 없는지 확인 작업.
+        boolean chk = true;
+        if(!chk){
+            main_room.setVisibility(View.VISIBLE);
+            tv_main.setVisibility(View.GONE);
+            tv_main2.setVisibility(View.GONE);
+            back.setVisibility(View.GONE);
 
+            RoomAdapter roomAdapter = new RoomAdapter(test);
+            main_room.setAdapter(roomAdapter);
+        }else{
+            main_room.setVisibility(View.GONE);
+            tv_main.setVisibility(View.VISIBLE);
+            tv_main2.setVisibility(View.VISIBLE);
+            back.setVisibility(View.VISIBLE);
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         toolbar.setLogo(R.drawable.logo);
