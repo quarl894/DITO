@@ -24,20 +24,33 @@
         android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="25dp">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="#0f0f0f"
-            android:gravity="center_horizontal"
-            android:text="마케팅 커뮤니케이션 과목
-&apos;마커팀플 2팀&apos; 방이 생성되었습니다!
-팀원들에게 링크를 공유해주세요. "/>
+            android:textColor="@color/black_high"
+            android:layout_gravity="center"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black_high"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black_high"
+            android:gravity="center"/>
 
         <Button
+            android:layout_marginTop="50dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/invite_copy"

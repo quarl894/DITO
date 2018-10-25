@@ -14,4 +14,6 @@
 
     <color name="transport">#4D000000</color>
     <color name="transport2">#00000000</color>
+    <color name="black_high">#0f0f0f</color>
+
 </resources>

@@ -150,6 +150,8 @@ public class CreateActivity extends BaseActivity {
                 Intent i = new Intent(CreateActivity.this, FinishActivity.class);
 
                 i.putExtra("key",k);
+                i.putExtra("r_name", info.getR_name());
+                i.putExtra("s_name", info.getS_name());
                 startActivity(i);
                 finish();
             }
