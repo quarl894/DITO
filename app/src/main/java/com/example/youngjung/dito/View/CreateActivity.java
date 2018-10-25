@@ -66,7 +66,6 @@ public class CreateActivity extends BaseActivity {
         parti = new ArrayList<>();
         hw = new ArrayList<>();
 
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);

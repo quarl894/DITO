@@ -2,8 +2,11 @@ package com.example.youngjung.dito.View;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -15,19 +18,29 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.youngjung.dito.Adapter.RoomAdapter;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.Info;
+import com.example.youngjung.dito.Model.room;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.ui.CustomDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+
+import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -41,8 +54,15 @@ public class MainActivity extends BaseActivity {
     FrameLayout main_frame;
     LinearLayout linear;
     CustomDialog cd;
+    ImageView back;
+    RecyclerView main_room;
+    RecyclerView.LayoutManager mlayoutManager;
     //firebase
-
+    DatabaseReference databaseReference;
+    ArrayList<Info> test = new ArrayList<>();
+    String a = "aaa";
+    static ArrayList<Info> tmp = new ArrayList<>();
+    int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +74,45 @@ public class MainActivity extends BaseActivity {
         fab_btn = findViewById(R.id.fab_btn);
         fab_join = findViewById(R.id.fab_item1);
         fab_create = findViewById(R.id.fab_item2);
-    //    back = findViewById(R.id.back);
         tv_main = findViewById(R.id.tv_main);
         tv_main2 = findViewById(R.id.tv_main2);
         main_frame = findViewById(R.id.main_frame);
-
+        back = findViewById(R.id.back);
 
         View incloude1 = findViewById(R.id.include_layout);
         toolbar = incloude1.findViewById(R.id.toolbar);
         linear = findViewById(R.id.linear);
 
-       // linear.setPadding(0,120,0,0);
+      //  View main_room = findViewById(R.id.true_room);
+        main_room = findViewById(R.id.true_room);
+        main_room.setHasFixedSize(true);
+        mlayoutManager = new LinearLayoutManager(this);
+        main_room.setLayoutManager(mlayoutManager);
 
+        //DB 불러오기
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+       // DatabaseReference ref = databaseReference.child("room");
+
+        get_data();
+       // linear.setPadding(0,120,0,0);
         tv_main.setText("팀플방에 참여하거나");
         tv_main2.setText("새로운 팀플방을 직접 만들어보세요!");
+        // chk는 DB에 방이 있는지 없는지 확인 작업.
+        boolean chk = true;
+        if(test.size()!=0){
+            main_room.setVisibility(View.VISIBLE);
+            tv_main.setVisibility(View.GONE);
+            tv_main2.setVisibility(View.GONE);
+            back.setVisibility(View.GONE);
 
+            RoomAdapter roomAdapter = new RoomAdapter(test);
+            main_room.setAdapter(roomAdapter);
+        }else{
+            main_room.setVisibility(View.GONE);
+            tv_main.setVisibility(View.VISIBLE);
+            tv_main2.setVisibility(View.VISIBLE);
+            back.setVisibility(View.VISIBLE);
+        }
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         toolbar.setLogo(R.drawable.logo);
@@ -104,9 +148,82 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         //뒤로 돌아왔을 때 fab 원복
+        super.onResume();
         open = false;
         fab();
-        super.onResume();
+
+
+        if(test.size() == 0) {
+            Toast.makeText(getApplicationContext(),"데이터를 읽어오고 있습니다.",Toast.LENGTH_SHORT).show();
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(test.size() ==0 && count<=3){
+                        onResume();
+                        count++;
+                    }else{
+                        get_data();
+                        Toast.makeText(getApplicationContext(),"데이터 완료.",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }, 2000);
+        }else{
+            Log.e("what the size: ", "" + test.size());
+        }
+    }
+
+    public void get_data(){
+        // model 생성자 초기화 안만들어주면 firebase 에러남. 꼭 만들어주기.(빈 생성자)
+        DatabaseReference ref = databaseReference.child("room");
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Iterable<DataSnapshot> child = dataSnapshot.getChildren();
+                for(DataSnapshot contact : child){
+                    room rf = contact.getValue(room.class);
+                    // Log.e("what:: ", rf.getR_name());
+
+                    test.add(new Info(rf.getR_name(), rf.getS_name(), "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
+
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        if(test.size()!=0){
+            main_room.setVisibility(View.VISIBLE);
+            tv_main.setVisibility(View.GONE);
+            tv_main2.setVisibility(View.GONE);
+            back.setVisibility(View.GONE);
+
+            RoomAdapter roomAdapter = new RoomAdapter(test);
+            main_room.setAdapter(roomAdapter);
+        }else{
+            main_room.setVisibility(View.GONE);
+            tv_main.setVisibility(View.VISIBLE);
+            tv_main2.setVisibility(View.VISIBLE);
+            back.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

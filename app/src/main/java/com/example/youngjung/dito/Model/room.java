@@ -9,6 +9,9 @@ public class room {
     private ArrayList<member> participant;
     private ArrayList<String> homework;
 
+    public room() {
+    }
+
     public room(String r_name, String s_name, ArrayList<member> participant, ArrayList<String> homework) {
         this.r_name = r_name;
         this.s_name = s_name;
