@@ -93,26 +93,14 @@ public class MainActivity extends BaseActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
        // DatabaseReference ref = databaseReference.child("room");
 
-        get_data();
+
        // linear.setPadding(0,120,0,0);
         tv_main.setText("팀플방에 참여하거나");
         tv_main2.setText("새로운 팀플방을 직접 만들어보세요!");
         // chk는 DB에 방이 있는지 없는지 확인 작업.
         boolean chk = true;
-        if(test.size()!=0){
-            main_room.setVisibility(View.VISIBLE);
-            tv_main.setVisibility(View.GONE);
-            tv_main2.setVisibility(View.GONE);
-            back.setVisibility(View.GONE);
 
-            RoomAdapter roomAdapter = new RoomAdapter(test);
-            main_room.setAdapter(roomAdapter);
-        }else{
-            main_room.setVisibility(View.GONE);
-            tv_main.setVisibility(View.VISIBLE);
-            tv_main2.setVisibility(View.VISIBLE);
-            back.setVisibility(View.VISIBLE);
-        }
+        get_data();
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
         toolbar.setLogo(R.drawable.logo);
@@ -152,19 +140,21 @@ public class MainActivity extends BaseActivity {
         open = false;
         fab();
 
-
         if(test.size() == 0) {
             Toast.makeText(getApplicationContext(),"데이터를 읽어오고 있습니다.",Toast.LENGTH_SHORT).show();
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(test.size() ==0 && count<=3){
+                    if(test.size()==0 && count<=3){
                         onResume();
                         count++;
-                    }else{
-                        get_data();
+                    }else if(test.size()!=0 && count>3){
+                        Toast.makeText(getApplicationContext(),"데이터가 없습니다.",Toast.LENGTH_SHORT).show();
+                    }else if(test.size()!=0 && count<=3){
+                        get_View();
                         Toast.makeText(getApplicationContext(),"데이터 완료.",Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
             }, 2000);
@@ -209,15 +199,18 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        get_View();
+    }
+
+    public void get_View(){
+            RoomAdapter roomAdapter = new RoomAdapter(test);
+            main_room.setAdapter(roomAdapter);
 
         if(test.size()!=0){
             main_room.setVisibility(View.VISIBLE);
             tv_main.setVisibility(View.GONE);
             tv_main2.setVisibility(View.GONE);
             back.setVisibility(View.GONE);
-
-            RoomAdapter roomAdapter = new RoomAdapter(test);
-            main_room.setAdapter(roomAdapter);
         }else{
             main_room.setVisibility(View.GONE);
             tv_main.setVisibility(View.VISIBLE);
