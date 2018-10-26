@@ -17,6 +17,7 @@ public class DefaultAppliction extends Application {
     private static volatile Activity currentActivity = null;
     private static Context context;
     private static String master;
+    private static String img_url;
 
     @Override
     public void onCreate() {
@@ -67,8 +68,17 @@ public class DefaultAppliction extends Application {
         return master;
     }
 
+    public static String s_img(String i){
+        img_url = i;
+        return img_url;
+    }
+
     public static String name(){
         return m_name(master);
+    }
+
+    public static String thumbnail(){
+        return s_img(img_url);
     }
 
 
