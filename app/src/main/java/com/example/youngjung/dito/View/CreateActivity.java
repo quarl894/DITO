@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -61,7 +58,7 @@ public class CreateActivity extends BaseActivity {
         sub_name = findViewById(R.id.edit_sub_name);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundResource(R.color.yello);
+        toolbar.setBackgroundResource(R.color.yellow);
         title_bar = findViewById(R.id.toolbar_title);
         parti = new ArrayList<>();
         hw = new ArrayList<>();
@@ -104,7 +101,7 @@ public class CreateActivity extends BaseActivity {
                 chk1 = editable.length();
                 if(chk1>0 && chk2>0){
                     ok = true;
-                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yello));
+                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yellow));
                 }
                 else{
                     ok = false;
@@ -127,7 +124,7 @@ public class CreateActivity extends BaseActivity {
                 chk2 = editable.length();
                 if(chk1>0 && chk2>0){
                     ok = true;
-                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yello));
+                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yellow));
                 }
                 else{
                     ok = false;

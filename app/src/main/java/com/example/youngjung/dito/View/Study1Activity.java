@@ -8,16 +8,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.R;
-
+import com.bumptech.glide.*;
 public class Study1Activity extends BaseActivity {
     Toolbar toolbar;
     ImageView img1;
-    Glide glideApp;
+    TextView tv_add, tv_add2;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,18 +29,47 @@ public class Study1Activity extends BaseActivity {
         View include = findViewById(R.id.include_layout);
         toolbar = include.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundResource(R.color.yello);
+        toolbar.setBackgroundResource(R.color.yellow);
         img1 = findViewById(R.id.img1);
+        tv_add = findViewById(R.id.tv_add);
+        tv_add2 = findViewById(R.id.tv_add2);
 
-        //Glide.with(this).load(DefaultAppliction.thumbnail()).into(img1);
+        tv_add2.setPadding(0,DefaultAppliction.dpToPx(35),0,0);
+        tv_add.setPadding(0,0,0,DefaultAppliction.dpToPx(34));
+
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.icn_leader).centerCrop().circleCrop();
+        Glide.with(this).load(DefaultAppliction.thumbnail()).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(img1);
 
     }
+
+//    // For a simple image list:
+//    @Override
+//    public View getView(int position, View recycled, ViewGroup container) {
+//        final ImageView myImageView;
+//        if (recycled == null) {
+//            myImageView = (ImageView) inflater.inflate(R.layout.my_image_view, container, false);
+//        } else {
+//            myImageView = (ImageView) recycled;
+//        }
+//
+//        String url = myUrls.get(position);
+//
+//        GlideApp
+//                .with(myFragment)
+//                .load(url)
+//                .centerCrop()
+//                .placeholder(R.drawable.loading_spinner)
+//                .into(myImageView);
+//
+//        return myImageView;
+//    }
+
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
+        menuInflater.inflate(R.menu.study_menu, menu);
         return true;
     }
 

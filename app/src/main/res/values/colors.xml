@@ -7,7 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="back_black">#99000000</color>
-    <color name="yello">#ffcc00</color>
+    <color name="yellow">#ffcc00</color>
 
     <color name="brownish_grey">#666666</color>
     <color name="very_light_pink">#bfbfbf</color>
@@ -15,5 +15,7 @@
     <color name="transport">#4D000000</color>
     <color name="transport2">#00000000</color>
     <color name="black_high">#0f0f0f</color>
+    <color name="very_light_pink_two">#f2f2f2</color>
+    <color name="black_2">#000000</color>
 
 </resources>

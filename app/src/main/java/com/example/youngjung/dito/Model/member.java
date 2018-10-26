@@ -12,6 +12,10 @@ public class member {
     public member() {
     }
 
+    public member(String id) {
+        this.id = id;
+    }
+
     public member(String id, String name, String subnail) {
         this.id = id;
         this.name = name;

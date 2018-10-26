@@ -1,6 +1,7 @@
 package com.example.youngjung.dito.View;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import com.example.youngjung.dito.Adapter.RoomAdapter;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
+import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.Model.room;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.ui.CustomDialog;
@@ -60,6 +62,7 @@ public class MainActivity extends BaseActivity {
     //firebase
     DatabaseReference databaseReference;
     ArrayList<Info> test = new ArrayList<>();
+    ArrayList<member> mem = new ArrayList<>();
     String a = "aaa";
     static ArrayList<Info> tmp = new ArrayList<>();
     int count = 0;
@@ -170,33 +173,33 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Iterable<DataSnapshot> child = dataSnapshot.getChildren();
+                Iterable<DataSnapshot> child2 = dataSnapshot.child("member").getChildren();
                 for(DataSnapshot contact : child){
                     room rf = contact.getValue(room.class);
                     // Log.e("what:: ", rf.getR_name());
 
                     test.add(new Info(rf.getR_name(), rf.getS_name(), "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
-
                 }
+//                for(DataSnapshot c2 : child2){
+//                    member m = c2.getValue(member.class);
+//                    mem.add(new member(m.getId()));
+//                }
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
         get_View();

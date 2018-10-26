@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.R;
+import com.example.youngjung.dito.View.Study1Activity;
 
 public class CustomDialog extends android.app.Dialog {
     EditText edit;
@@ -22,7 +23,7 @@ public class CustomDialog extends android.app.Dialog {
     LinearLayout dialog_linear;
     TextView tv;
 
-    public CustomDialog(Context context) {
+    public CustomDialog(final Context context) {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);   //다이얼로그의 타이틀바를 없애주는 옵션입니다.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  //다이얼로그의 배경을 투명으로 만듭니다.
@@ -52,7 +53,8 @@ public class CustomDialog extends android.app.Dialog {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(this,)
+                Intent i = new Intent(getContext(), Study1Activity.class);
+                getContext().startActivity(i);
             }
         });
 
