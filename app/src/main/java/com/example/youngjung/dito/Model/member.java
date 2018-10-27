@@ -12,18 +12,18 @@ public class member {
     public member() {
     }
 
+    public member(String id) {
+        this.id = id;
+    }
+
+
+
     public member(String id, String name, String subnail) {
         this.id = id;
         this.name = name;
         this.subnail = subnail;
     }
 
-    public member(String id, String name, String subnail, ArrayList<String> room_key) {
-        this.id = id;
-        this.name = name;
-        this.subnail = subnail;
-        this.room_key = room_key;
-    }
 
     public String getId() {
         return id;

@@ -72,7 +72,7 @@
             android:layout_height="55dp"
             android:text="만들기"
             android:textSize="20sp"
-            android:background="@color/yello" />
+            android:background="@color/yellow" />
     </FrameLayout>
 
 </RelativeLayout>

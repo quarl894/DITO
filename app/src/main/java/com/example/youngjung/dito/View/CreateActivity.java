@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -61,7 +58,7 @@ public class CreateActivity extends BaseActivity {
         sub_name = findViewById(R.id.edit_sub_name);
 
         setSupportActionBar(toolbar);
-        toolbar.setBackgroundResource(R.color.yello);
+        toolbar.setBackgroundResource(R.color.yellow);
         title_bar = findViewById(R.id.toolbar_title);
         parti = new ArrayList<>();
         hw = new ArrayList<>();
@@ -81,8 +78,11 @@ public class CreateActivity extends BaseActivity {
                 String sub = sub_name.getText().toString();
                 if(ok) {
                     // 방 생성
-                    info = new room(r,sub,parti,hw);
-                    databaseReference.child("room").child(master).push().setValue(new room(info.getR_name(), info.getS_name(),info.getParticipant(), info.getHomework()));
+                    info = new room(r,sub);
+                    DatabaseReference db = databaseReference.child("room").child(master).child("own").push();
+                    db.setValue(new room(info.getR_name(), info.getS_name())); //방 생성
+                    db.child("member").child(master).setValue(new member(DefaultAppliction.name(),DefaultAppliction.get_nick(),DefaultAppliction.thumbnail()));
+                //    db.child("member").setValue(master); //나도 맴버에 추가시킴.
                     find();
                 }else{
                     Toast.makeText(getApplicationContext(),"이름과 과목을 작성해주세요.",Toast.LENGTH_SHORT).show();
@@ -104,7 +104,7 @@ public class CreateActivity extends BaseActivity {
                 chk1 = editable.length();
                 if(chk1>0 && chk2>0){
                     ok = true;
-                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yello));
+                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yellow));
                 }
                 else{
                     ok = false;
@@ -127,7 +127,7 @@ public class CreateActivity extends BaseActivity {
                 chk2 = editable.length();
                 if(chk1>0 && chk2>0){
                     ok = true;
-                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yello));
+                    btn_finish.setBackgroundColor(getResources().getColor(R.color.yellow));
                 }
                 else{
                     ok = false;
@@ -140,7 +140,7 @@ public class CreateActivity extends BaseActivity {
     //초대링크 만들어서 저장 및 보내기.
     public String find(){
         // 방금 업뎃된거 가져오기
-        Query q = databaseReference.child("room").child(master).limitToLast(1);
+        Query q = databaseReference.child("room").child(master).child("own").limitToLast(1);
 
         q.addChildEventListener(new ChildEventListener() {
             @Override

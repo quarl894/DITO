@@ -62,6 +62,8 @@ public class KaKaoSignupActivity extends BaseActivity {
                     String img = result.getThumbnailImagePath();
 
                     DefaultAppliction.m_name(id);
+                    DefaultAppliction.s_img(img);
+                    DefaultAppliction.s_nick(nick);
                     member = new member(id,nick,img);
                     save_profile(member);
                     redirectMainActivity();

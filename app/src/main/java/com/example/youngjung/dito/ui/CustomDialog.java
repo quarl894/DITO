@@ -14,15 +14,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
+import com.example.youngjung.dito.View.Study1Activity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class CustomDialog extends android.app.Dialog {
     EditText edit;
     Button btn_can, btn_ok;
     LinearLayout dialog_linear;
     TextView tv;
+    DatabaseReference databaseReference;
 
-    public CustomDialog(Context context) {
+    public CustomDialog(final Context context) {
         super(context);
         requestWindowFeature(Window.FEATURE_NO_TITLE);   //다이얼로그의 타이틀바를 없애주는 옵션입니다.
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));  //다이얼로그의 배경을 투명으로 만듭니다.
@@ -34,6 +42,7 @@ public class CustomDialog extends android.app.Dialog {
 
         dialog_linear = findViewById(R.id.dialog_linear);
         String str = "팀플<Strong>참여코드</Strong>를<br>입력하세요.";
+        databaseReference = FirebaseDatabase.getInstance().getReference();
 
         tv.setPadding(0,DefaultAppliction.dpToPx(48),0,0);
         tv.setText(Html.fromHtml(str));
@@ -52,7 +61,43 @@ public class CustomDialog extends android.app.Dialog {
         btn_ok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Intent i = new Intent(this,)
+                String[] tmp = edit.getText().toString().split(" ");
+                if(edit.getText().toString()==null || tmp[0]==null || tmp.length!=2){
+                    Toast.makeText(getContext(),"코드가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
+                }else{
+                    final String name = tmp[0];
+                    final String key = tmp[1];
+                    DatabaseReference data = databaseReference.child("room").child(name).child("own").child(key);
+                    data.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue()!=null){
+                                databaseReference.child("room").child(name).child("own").child(key).child("member").child(DefaultAppliction.name())
+                                        .setValue(new member(DefaultAppliction.name(), DefaultAppliction.get_nick(),DefaultAppliction.thumbnail()));
+                                Intent i = new Intent(getContext(), Study1Activity.class);
+                                getContext().startActivity(i);
+                            }else{
+                                Toast.makeText(getContext(),"코드가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+//                    if(databaseReference.child("room").child(name).child("own").child(key)!=null){
+//                        databaseReference.child("room").child(name).child("own").child(key).child("member").child(DefaultAppliction.name())
+//                                .setValue(new member(DefaultAppliction.name(), DefaultAppliction.get_nick(),DefaultAppliction.thumbnail()));
+//                        Intent i = new Intent(getContext(), Study1Activity.class);
+//                        getContext().startActivity(i);
+//                    }else{
+//                        Toast.makeText(getContext(),"코드가 일치하지 않습니다",Toast.LENGTH_SHORT).show();
+                //}
+                }
+
+                dismiss();
             }
         });
 

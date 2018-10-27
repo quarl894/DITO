@@ -37,6 +37,8 @@
         <activity android:name=".View.SettingActivity"/>
         <activity android:name=".View.FinishActivity"
             android:theme="@style/yellow_statusbar"/>
+        <activity android:name=".View.Study1Activity"
+            android:theme="@style/yellow_statusbar"/>
     </application>
 
 </manifest>
