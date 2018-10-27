@@ -18,6 +18,7 @@ public class DefaultAppliction extends Application {
     private static Context context;
     private static String master;
     private static String img_url;
+    private static String nick;
 
     @Override
     public void onCreate() {
@@ -73,6 +74,11 @@ public class DefaultAppliction extends Application {
         return img_url;
     }
 
+    public static String s_nick(String n){
+        nick = n;
+        return nick;
+    }
+
     public static String name(){
         return m_name(master);
     }
@@ -81,5 +87,5 @@ public class DefaultAppliction extends Application {
         return s_img(img_url);
     }
 
-
+    public static String get_nick() { return s_nick(nick); }
 }

@@ -149,10 +149,10 @@ public class MainActivity extends BaseActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(test.size()==0 && count<=3){
+                    if(test.size()==0 && count<3){
                         onResume();
                         count++;
-                    }else if(test.size()!=0 && count>3){
+                    }else if(test.size()!=0 && count>=3){
                         Toast.makeText(getApplicationContext(),"데이터가 없습니다.",Toast.LENGTH_SHORT).show();
                     }else if(test.size()!=0 && count<=3){
                         get_View();
@@ -172,13 +172,33 @@ public class MainActivity extends BaseActivity {
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                //내가 방장인 방 탐색
                 Iterable<DataSnapshot> child = dataSnapshot.getChildren();
-                Iterable<DataSnapshot> child2 = dataSnapshot.child("member").getChildren();
-                for(DataSnapshot contact : child){
+                // 내가 방장이 아닌 방 탐색
+                Iterable<DataSnapshot> child2 = dataSnapshot.child("own").getChildren();
+                for(DataSnapshot contact : child2){
                     room rf = contact.getValue(room.class);
+                 //  member pic = contact.child("member").getValue(member.class);
+                   ArrayList<member> arr = new ArrayList<>();
+                   String img1= null;
+                   String img2= null;
+                   String img3= null;
+                    Iterable<DataSnapshot> child3 = contact.child("member").getChildren();
+                    for(DataSnapshot contact2 : child3){
+                        member p = contact2.getValue(member.class);
+                        arr.add(p);
+                    }
+                    for(int i=0; i<arr.size(); i++){
+                        if(i==0) img1 = arr.get(i).getSubnail();
+                        else if(i==1) img2 = arr.get(i).getSubnail();
+                        else if(i==2) img3 = arr.get(i).getSubnail();
+                        else break;
+                    }
                     // Log.e("what:: ", rf.getR_name());
-
-                    test.add(new Info(rf.getR_name(), rf.getS_name(), "+3", R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader, R.drawable.icn_leader));
+                    long count = contact.child("member").getChildrenCount(); // 팀원 수
+                    String cnt = "+" +count;
+                    //내가 방장일 때
+                    test.add(new Info(rf.getR_name(), rf.getS_name(), cnt, R.drawable.icn_leader, img1, img2, img3));
                 }
 //                for(DataSnapshot c2 : child2){
 //                    member m = c2.getValue(member.class);

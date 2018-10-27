@@ -1,5 +1,7 @@
 package com.example.youngjung.dito.Adapter;
 
+import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,13 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.R;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<Info> roomList;
+    Context context ;
 
     public RoomAdapter(ArrayList<Info> roomList) {
         this.roomList = roomList;
@@ -36,6 +44,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             img1 = view.findViewById(R.id.img1);
             img2 = view.findViewById(R.id.img2);
             img3 = view.findViewById(R.id.img3);
+
         }
     }
 
@@ -43,21 +52,36 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.room,viewGroup,false);
-
+        context = viewGroup.getContext();
         return new MyViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
+        String uri1 = roomList.get(i).getImg1();
+        String uri2 = roomList.get(i).getImg2();
+        String uri3 = roomList.get(i).getImg3();
+
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
         myViewHolder.r_name.setText(roomList.get(i).getR_name());
         myViewHolder.s_name.setText(roomList.get(i).getS_name());
         myViewHolder.cnt.setText(roomList.get(i).getCnt());
+
         myViewHolder.img_master.setImageResource(roomList.get(i).getImg_master());
-        myViewHolder.img1.setImageResource(roomList.get(i).getImg1());
-        myViewHolder.img2.setImageResource(roomList.get(i).getImg1());
-        myViewHolder.img3.setImageResource(roomList.get(i).getImg1());
+      //  myViewHolder.img1.setImageResource(roomList.get(i).getImg1());
+      //  myViewHolder.img2.setImageResource(roomList.get(i).getImg1());
+      //  myViewHolder.img3.setImageResource(roomList.get(i).getImg1());
+        if(uri2==null) myViewHolder.img2.setVisibility(View.GONE);
+        else myViewHolder.img2.setVisibility(View.VISIBLE);
+        if(uri3==null) myViewHolder.img3.setVisibility(View.GONE);
+        else myViewHolder.img3.setVisibility(View.VISIBLE);
+
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.icn_leader).centerCrop().circleCrop();
+        Glide.with(context).load(uri1).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(myViewHolder.img1);
+        Glide.with(context).load(uri2).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(myViewHolder.img2);
+        Glide.with(context).load(uri3).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(myViewHolder.img3);
+
     }
 
     @Override

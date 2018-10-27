@@ -22,12 +22,6 @@ public class member {
         this.subnail = subnail;
     }
 
-    public member(String id, String name, String subnail, ArrayList<String> room_key) {
-        this.id = id;
-        this.name = name;
-        this.subnail = subnail;
-        this.room_key = room_key;
-    }
 
     public String getId() {
         return id;

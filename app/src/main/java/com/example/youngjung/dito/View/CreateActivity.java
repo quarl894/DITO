@@ -78,8 +78,11 @@ public class CreateActivity extends BaseActivity {
                 String sub = sub_name.getText().toString();
                 if(ok) {
                     // 방 생성
-                    info = new room(r,sub,parti,hw);
-                    databaseReference.child("room").child(master).push().setValue(new room(info.getR_name(), info.getS_name(),info.getParticipant(), info.getHomework()));
+                    info = new room(r,sub);
+                    DatabaseReference db = databaseReference.child("room").child(master).child("own").push();
+                    db.setValue(new room(info.getR_name(), info.getS_name())); //방 생성
+                    db.child("member").child(master).setValue(new member(DefaultAppliction.name(),DefaultAppliction.get_nick(),DefaultAppliction.thumbnail()));
+                //    db.child("member").setValue(master); //나도 맴버에 추가시킴.
                     find();
                 }else{
                     Toast.makeText(getApplicationContext(),"이름과 과목을 작성해주세요.",Toast.LENGTH_SHORT).show();
@@ -137,7 +140,7 @@ public class CreateActivity extends BaseActivity {
     //초대링크 만들어서 저장 및 보내기.
     public String find(){
         // 방금 업뎃된거 가져오기
-        Query q = databaseReference.child("room").child(master).limitToLast(1);
+        Query q = databaseReference.child("room").child(master).child("own").limitToLast(1);
 
         q.addChildEventListener(new ChildEventListener() {
             @Override

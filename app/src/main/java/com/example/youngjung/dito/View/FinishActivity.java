@@ -20,7 +20,7 @@ import com.example.youngjung.dito.R;
 public class FinishActivity extends BaseActivity {
     TextView tv_key, tv_1, tv_2, tv_3;
     Button btn_finish, btn_invite;
-    String mykey, r_name, s_name;
+    String mykey, r_name, s_name, invite_key;
     LinearLayout linear;
     ClipboardManager clipboardManager;
     @Override
@@ -44,8 +44,11 @@ public class FinishActivity extends BaseActivity {
         s_name = i.getExtras().getString("s_name");
 
         mykey = i.getExtras().getString("key");
-        tv_key.setText(mykey);
-        Log.e("key", mykey);
+        invite_key = DefaultAppliction.name() + " " +mykey;
+        tv_key.setText(invite_key);
+
+
+        Log.e("key", invite_key);
         String str1 = "<strong>"+r_name+"</strong>"+"과목";
         String str2 = "<strong>"+s_name+"</strong>"+"방이 생성되었습니다!";
         String str3 = "팀원들에게 링크를 공유해주세요.";
@@ -57,7 +60,7 @@ public class FinishActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 //클립보드 복사
-                ClipData clipData = ClipData.newPlainText("초대 링크", mykey);
+                ClipData clipData = ClipData.newPlainText("초대 링크", invite_key);
                 clipboardManager.setPrimaryClip(clipData);
                 Toast.makeText(getApplication(), "복사되었습니다.",Toast.LENGTH_SHORT).show();
             }
