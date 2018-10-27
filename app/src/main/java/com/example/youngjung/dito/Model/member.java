@@ -16,6 +16,8 @@ public class member {
         this.id = id;
     }
 
+
+
     public member(String id, String name, String subnail) {
         this.id = id;
         this.name = name;

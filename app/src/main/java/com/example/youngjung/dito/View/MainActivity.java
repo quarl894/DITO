@@ -34,11 +34,13 @@ import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.ui.CustomDialog;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 
@@ -66,6 +68,7 @@ public class MainActivity extends BaseActivity {
     String a = "aaa";
     static ArrayList<Info> tmp = new ArrayList<>();
     int count = 0;
+    boolean chk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +94,7 @@ public class MainActivity extends BaseActivity {
         main_room.setHasFixedSize(true);
         mlayoutManager = new LinearLayoutManager(this);
         main_room.setLayoutManager(mlayoutManager);
+
 
         //DB 불러오기
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -152,10 +156,10 @@ public class MainActivity extends BaseActivity {
                     if(test.size()==0 && count<3){
                         onResume();
                         count++;
-                    }else if(test.size()!=0 && count>=3){
+                    }else if(test.size()==0 && count>=3){
                         Toast.makeText(getApplicationContext(),"데이터가 없습니다.",Toast.LENGTH_SHORT).show();
                     }else if(test.size()!=0 && count<=3){
-                        get_View();
+                  //      get_View();
                         Toast.makeText(getApplicationContext(),"데이터 완료.",Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -168,42 +172,96 @@ public class MainActivity extends BaseActivity {
 
     public void get_data(){
         // model 생성자 초기화 안만들어주면 firebase 에러남. 꼭 만들어주기.(빈 생성자)
-        DatabaseReference ref = databaseReference.child("room");
+        Query ref = databaseReference.child("room").child(DefaultAppliction.name());
         ref.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 //내가 방장인 방 탐색
+                //Iterable<DataSnapshot> child = dataSnapshot.getChildren();
+                   if(dataSnapshot.getKey().toString().equals("own")){
                 Iterable<DataSnapshot> child = dataSnapshot.getChildren();
-                // 내가 방장이 아닌 방 탐색
-                Iterable<DataSnapshot> child2 = dataSnapshot.child("own").getChildren();
-                for(DataSnapshot contact : child2){
+                for (DataSnapshot contact : child) {
                     room rf = contact.getValue(room.class);
-                 //  member pic = contact.child("member").getValue(member.class);
-                   ArrayList<member> arr = new ArrayList<>();
-                   String img1= null;
-                   String img2= null;
-                   String img3= null;
-                    Iterable<DataSnapshot> child3 = contact.child("member").getChildren();
-                    for(DataSnapshot contact2 : child3){
+                    ArrayList<member> arr = new ArrayList<>();
+                    String img1 = null;
+                    String img2 = null;
+                    String img3 = null;
+                    Iterable<DataSnapshot> child2 = contact.child("member").getChildren();
+                    // 팀원들 탐색
+                    for (DataSnapshot contact2 : child2) {
                         member p = contact2.getValue(member.class);
                         arr.add(p);
                     }
-                    for(int i=0; i<arr.size(); i++){
-                        if(i==0) img1 = arr.get(i).getSubnail();
-                        else if(i==1) img2 = arr.get(i).getSubnail();
-                        else if(i==2) img3 = arr.get(i).getSubnail();
+                    for (int i = 0; i < arr.size(); i++) {
+                        if (i == 0) img1 = arr.get(i).getSubnail();
+                        else if (i == 1) img2 = arr.get(i).getSubnail();
+                        else if (i == 2) img3 = arr.get(i).getSubnail();
                         else break;
                     }
                     // Log.e("what:: ", rf.getR_name());
                     long count = contact.child("member").getChildrenCount(); // 팀원 수
-                    String cnt = "+" +count;
+                    String cnt = "+" + count;
                     //내가 방장일 때
-                    test.add(new Info(rf.getR_name(), rf.getS_name(), cnt, R.drawable.icn_leader, img1, img2, img3));
+                    test.add(new Info(rf.getR_name(), rf.getS_name(), cnt, 1, img1, img2, img3));
                 }
-//                for(DataSnapshot c2 : child2){
-//                    member m = c2.getValue(member.class);
-//                    mem.add(new member(m.getId()));
-//                }
+
+                    // 내가 방장이 아닌 방 탐색
+                }else{
+                Iterable<DataSnapshot> nowon = dataSnapshot.getChildren();
+                for(DataSnapshot data : nowon) {
+                    String id = data.getKey();
+                    Iterable<DataSnapshot> child3 = dataSnapshot.child(id).getChildren();
+                    for (DataSnapshot contact3 : child3) {
+                        String key = contact3.getKey();
+                        DatabaseReference q = databaseReference.child("room").child(id).child("own");
+                        q.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                room r1 = dataSnapshot.getValue(room.class);
+                                Iterable<DataSnapshot> child2 = dataSnapshot.child("member").getChildren();
+                                ArrayList<member> arr = new ArrayList<>();
+                                String img1 = null;
+                                String img2 = null;
+                                String img3 = null;
+                                // 팀원들 탐색
+                                for (DataSnapshot contact2 : child2) {
+                                    member p = contact2.getValue(member.class);
+                                    arr.add(p);
+                                }
+                                for (int i = 0; i < arr.size(); i++) {
+                                    if (i == 0) img1 = arr.get(i).getSubnail();
+                                    else if (i == 1) img2 = arr.get(i).getSubnail();
+                                    else if (i == 2) img3 = arr.get(i).getSubnail();
+                                    else break;
+                                }
+                                // Log.e("what:: ", rf.getR_name());
+                                int count = arr.size(); // 팀원 수
+                                String cnt = "+" + count;
+                                //내가 방장일 때
+                                test.add(new Info(r1.getR_name(), r1.getS_name(), cnt, 0, img1, img2, img3));
+                                get_View();
+                                chk = true;
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                    }
+                }
+                }
             }
 
             @Override
@@ -222,7 +280,6 @@ public class MainActivity extends BaseActivity {
             public void onCancelled(DatabaseError databaseError) {
             }
         });
-        get_View();
     }
 
     public void get_View(){

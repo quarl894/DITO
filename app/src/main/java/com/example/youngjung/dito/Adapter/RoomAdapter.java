@@ -1,6 +1,7 @@
 package com.example.youngjung.dito.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.R;
+import com.example.youngjung.dito.View.Study1Activity;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -68,7 +70,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         myViewHolder.s_name.setText(roomList.get(i).getS_name());
         myViewHolder.cnt.setText(roomList.get(i).getCnt());
 
-        myViewHolder.img_master.setImageResource(roomList.get(i).getImg_master());
+        if(roomList.get(i).getImg_master()==1) myViewHolder.img_master.setImageResource(R.drawable.icn_leader);
+        else myViewHolder.img_master.setVisibility(View.GONE);
       //  myViewHolder.img1.setImageResource(roomList.get(i).getImg1());
       //  myViewHolder.img2.setImageResource(roomList.get(i).getImg1());
       //  myViewHolder.img3.setImageResource(roomList.get(i).getImg1());
@@ -82,7 +85,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         Glide.with(context).load(uri2).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(myViewHolder.img2);
         Glide.with(context).load(uri3).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(myViewHolder.img3);
 
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, Study1Activity.class);
+                context.startActivity(i);
+            }
+        });
     }
+
+
 
     @Override
     public int getItemViewType(int position) {

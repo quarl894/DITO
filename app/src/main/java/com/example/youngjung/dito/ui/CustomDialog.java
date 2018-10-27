@@ -55,6 +55,7 @@ public class CustomDialog extends android.app.Dialog {
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), Study1Activity.class);
                 getContext().startActivity(i);
+                dismiss();
             }
         });
 

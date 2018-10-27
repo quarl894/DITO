@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/ic_master"
-            android:src="@drawable/icn_leader" />
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
