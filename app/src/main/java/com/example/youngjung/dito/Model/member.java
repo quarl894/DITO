@@ -1,8 +1,10 @@
 package com.example.youngjung.dito.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class member {
+public class member implements Serializable {
+    private static final long serialVersionUID = 1L;
     // id, name, pic,
     private String id;
     private String name;

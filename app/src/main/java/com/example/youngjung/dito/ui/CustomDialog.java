@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
+import com.example.youngjung.dito.View.MainActivity;
 import com.example.youngjung.dito.View.Study1Activity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

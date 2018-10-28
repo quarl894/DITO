@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
+import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.View.Study1Activity;
 
@@ -24,10 +25,22 @@ import java.util.ArrayList;
 
 public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private ArrayList<Info> roomList;
+    private ArrayList<ArrayList<member>> m_list;
     Context context ;
 
     public RoomAdapter(ArrayList<Info> roomList) {
         this.roomList = roomList;
+    }
+
+//    public RoomAdapter(ArrayList<Info> roomList, ArrayList<ArrayList<member>> m_list) {
+//        this.roomList = roomList;
+//        this.m_list = m_list;
+//    }
+
+    public RoomAdapter(ArrayList<Info> roomList, ArrayList<ArrayList<member>> m_list, Context context) {
+        this.roomList = roomList;
+        this.m_list = m_list;
+        this.context = context;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -54,7 +67,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.room,viewGroup,false);
-        context = viewGroup.getContext();
+      //  context = viewGroup.getContext();
         return new MyViewHolder(v);
     }
 
@@ -63,6 +76,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         String uri1 = roomList.get(i).getImg1();
         String uri2 = roomList.get(i).getImg2();
         String uri3 = roomList.get(i).getImg3();
+        final int pos = i;
+        final Info fo = roomList.get(i);
 
         MyViewHolder myViewHolder = (MyViewHolder) holder;
 
@@ -88,8 +103,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(context, Study1Activity.class);
-                context.startActivity(i);
+                Intent i2 = new Intent(context, Study1Activity.class);
+                // ArrayList를 보낼 때는 해당 model이 직렬화가 되어있어야 한다.(implements Serializable)
+                i2.putExtra("member",m_list.get(pos));
+                i2.putExtra("info", fo);
+                context.startActivity(i2);
             }
         });
     }

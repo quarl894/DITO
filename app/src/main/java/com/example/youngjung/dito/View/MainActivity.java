@@ -64,7 +64,7 @@ public class MainActivity extends BaseActivity {
     //firebase
     DatabaseReference databaseReference;
     ArrayList<Info> test = new ArrayList<>();
-    ArrayList<member> mem = new ArrayList<>();
+    ArrayList<ArrayList<member>> mem = new ArrayList<>();
     String a = "aaa";
     static ArrayList<Info> tmp = new ArrayList<>();
     int count = 0;
@@ -203,6 +203,7 @@ public class MainActivity extends BaseActivity {
                     String cnt = "+" + count;
                     //내가 방장일 때
                     test.add(new Info(rf.getR_name(), rf.getS_name(), cnt, 1, img1, img2, img3));
+                    mem.add(arr);
                 }
 
                     // 내가 방장이 아닌 방 탐색
@@ -239,6 +240,7 @@ public class MainActivity extends BaseActivity {
                                 String cnt = "+" + count;
                                 //내가 방장일 때
                                 test.add(new Info(r1.getR_name(), r1.getS_name(), cnt, 0, img1, img2, img3));
+                                mem.add(arr);
                                 get_View();
                                 chk = true;
                             }
@@ -283,7 +285,7 @@ public class MainActivity extends BaseActivity {
     }
 
     public void get_View(){
-            RoomAdapter roomAdapter = new RoomAdapter(test);
+            RoomAdapter roomAdapter = new RoomAdapter(test,mem,getApplicationContext());
             main_room.setAdapter(roomAdapter);
 
         if(test.size()!=0){

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/toolbar"
+        android:id="@+id/include_layout" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:textSize="15sp"
+        android:textColor="#0f0f0f"
+        android:text="과제 추가하기"
+        android:gravity="center"
+        android:id="@+id/toolbar_title" />
+
+    <FrameLayout
+        android:id="@+id/layout_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/include_layout">
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#0f0f0f"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="14dp"
+                android:text="과제명" />
+
+            <EditText
+                android:id="@+id/edit_room_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#111111"
+                android:hint="과제명을 입력해주세요." />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="#0f0f0f"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="14dp"
+                android:text="과제 내용"/>
+
+            <EditText
+                android:id="@+id/edit_sub_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#111111"
+                android:hint="과제 내용을 입력해주세요." />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black_high"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:text="과제 수행자 지정하기" />
+                <ImageButton
+                    android:id="@+id/btn_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_more"
+                    android:paddingLeft="7dp"
+                    android:layout_gravity="right"
+                    android:background="@color/transport2"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textColor="@color/black_high"
+                    android:gravity="left"
+                    android:layout_weight="1"
+                    android:text="과제 기한 설정하기" />
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#adadad"
+                    android:lineSpacingExtra="4sp"
+                    android:gravity="end"
+                   />
+                <ImageButton
+                    android:id="@+id/btn_set"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/btn_more"
+                    android:paddingLeft="7dp"
+                    android:layout_gravity="right"
+                    android:background="@color/transport2"/>
+            </LinearLayout>
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:mcv_showOtherDates="none"
+                app:mcv_showWeekDays="false"
+                app:mcv_selectionColor="@color/yellow" />
+        </LinearLayout>
+        <Button
+            android:layout_below="@+id/calendarView"
+            android:layout_gravity="bottom"
+            android:id="@+id/btn_finish"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="만들기"
+            android:textSize="20sp"
+            android:background="@color/yellow" />
+    </FrameLayout>
+</RelativeLayout>
