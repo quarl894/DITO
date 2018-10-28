@@ -32,6 +32,7 @@ public class Study1Activity extends BaseActivity {
     Context context;
     Button btn_finish;
     ImageButton btn_profile;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
