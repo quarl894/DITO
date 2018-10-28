@@ -80,6 +80,7 @@
                 android:layout_marginRight="8dp"
                 android:background="@drawable/shadow" />
             <ImageButton
+                android:id="@+id/btn_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

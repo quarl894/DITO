@@ -2,28 +2,24 @@ package com.example.youngjung.dito.View;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.bumptech.glide.request.RequestOptions;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.DefaultAppliction;
 import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
-import com.bumptech.glide.*;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 public class Study1Activity extends BaseActivity {
@@ -34,6 +30,8 @@ public class Study1Activity extends BaseActivity {
     ArrayList<member> m_list = new ArrayList<>();
     Info fo = new Info();
     Context context;
+    Button btn_finish;
+    ImageButton btn_profile;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +55,8 @@ public class Study1Activity extends BaseActivity {
         tv_t1 = findViewById(R.id.tv_t1);
         tv_t2 = findViewById(R.id.tv_t2);
         img_m = findViewById(R.id.img_m);
+        btn_finish = findViewById(R.id.btn_finish);
+        btn_profile = findViewById(R.id.btn_profile);
 
         tv_add2.setPadding(0,DefaultAppliction.dpToPx(35),0,0);
         tv_add.setPadding(0,0,0,DefaultAppliction.dpToPx(34));
@@ -73,32 +73,26 @@ public class Study1Activity extends BaseActivity {
         DefaultAppliction.img_glide(context,fo.getImg2(),img2);
         DefaultAppliction.img_glide(context,fo.getImg3(),img3);
 
+
+        btn_finish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Study1Activity.this, AddhwActivity.class);
+                i.putExtra("member",m_list);
+                startActivity(i);
+            }
+        });
+
+        btn_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Study1Activity.this, ProfileActivity.class);
+                i.putExtra("member",m_list);
+                startActivity(i);
+            }
+        });
         //Log.e("m_list", "" + m_list.size());
     }
-
-//    // For a simple image list:
-//    @Override
-//    public View getView(int position, View recycled, ViewGroup container) {
-//        final ImageView myImageView;
-//        if (recycled == null) {
-//            myImageView = (ImageView) inflater.inflate(R.layout.my_image_view, container, false);
-//        } else {
-//            myImageView = (ImageView) recycled;
-//        }
-//
-//        String url = myUrls.get(position);
-//
-//        GlideApp
-//                .with(myFragment)
-//                .load(url)
-//                .centerCrop()
-//                .placeholder(R.drawable.loading_spinner)
-//                .into(myImageView);
-//
-//        return myImageView;
-//    }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
