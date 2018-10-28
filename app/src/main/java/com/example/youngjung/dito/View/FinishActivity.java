@@ -69,8 +69,7 @@ public class FinishActivity extends BaseActivity {
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(FinishActivity.this, Study1Activity.class);
-                startActivity(i);
+               redirectMainActivity();
             }
         });
     }

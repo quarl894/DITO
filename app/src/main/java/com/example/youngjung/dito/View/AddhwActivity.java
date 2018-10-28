@@ -67,7 +67,7 @@ public class AddhwActivity extends BaseActivity {
         btn_action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(AddhwActivity.this, AddActivity.class);
+                Intent i= new Intent(AddhwActivity.this, AddPersonActivity.class);
                 i.putExtra("mem",m_list);
                 startActivity(i);
             }

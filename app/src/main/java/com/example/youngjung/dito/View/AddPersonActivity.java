@@ -1,6 +1,5 @@
 package com.example.youngjung.dito.View;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,50 +8,46 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.example.youngjung.dito.Adapter.ProfileAdapter;
+import com.example.youngjung.dito.Adapter.Add1Adapter;
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
 
 import java.util.ArrayList;
 
-public class AddActivity extends BaseActivity {
-    ArrayList<member> members = new ArrayList<>();
-    RecyclerView r_view;
-    RecyclerView.LayoutManager mlayoutManager;
-    Context context;
+public class AddPersonActivity extends BaseActivity{
     Toolbar toolbar;
-    TextView title_bar;
+    RecyclerView h_view;
+    RecyclerView v_view;
+    RecyclerView.LayoutManager mlayoutManager;
+    ArrayList<member> members = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_add_person);
         statusbar();
-
         View include = findViewById(R.id.include_layout);
-
         toolbar = include.findViewById(R.id.toolbar);
-        title_bar = findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
+        toolbar.setBackgroundResource(R.color.yellow);
 
-
-        r_view = findViewById(R.id.r_view);
-        r_view.setHasFixedSize(true);
-        mlayoutManager = new LinearLayoutManager(this);
-        r_view.setLayoutManager(mlayoutManager);
-        context = getApplicationContext();
-
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        h_view = findViewById(R.id.hor_rview);
+        v_view = findViewById(R.id.ver_rview);
 
         Intent i = getIntent();
         members = (ArrayList<member>) i.getExtras().get("mem");
 
-        ProfileAdapter profileAdapter = new ProfileAdapter(members,getApplicationContext());
-        r_view.setAdapter(profileAdapter);
+        mlayoutManager = new LinearLayoutManager(this);
+        v_view.setLayoutManager(mlayoutManager);
+
+        final Add1Adapter add1Adapter = new Add1Adapter(members,getApplicationContext());
+        v_view.setAdapter(add1Adapter);
+
+        add1Adapter.find();
     }
 
 

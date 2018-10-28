@@ -43,6 +43,7 @@
             android:theme="@style/yellow_statusbar"/>
         <activity android:name=".View.AddActivity"/>
         <activity android:name=".View.ProfileActivity"/>
+        <activity android:name=".View.AddPersonActivity"/>
     </application>
 
 </manifest>
