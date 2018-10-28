@@ -2,9 +2,11 @@ package com.example.youngjung.dito.Model;
 
 import android.widget.ImageView;
 
+import java.io.Serializable;
 import java.net.URI;
 
-public class Info {
+public class Info implements Serializable{
+    private static final long serialVersionUID2 = 1L;
     private String r_name;
     private String s_name;
     private String cnt;

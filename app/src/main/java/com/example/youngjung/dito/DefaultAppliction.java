@@ -3,10 +3,15 @@ package com.example.youngjung.dito;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.youngjung.dito.Adapter.KakaoSDKAdapter;
 import com.kakao.auth.KakaoSDK;
 
@@ -88,4 +93,9 @@ public class DefaultAppliction extends Application {
     }
 
     public static String get_nick() { return s_nick(nick); }
+
+    public static void img_glide(Context context, String uri, ImageView view){
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.shadow).centerCrop().circleCrop();
+        Glide.with(context).load(uri).transition(DrawableTransitionOptions.withCrossFade()).apply(requestOptions).into(view);
+    }
 }
