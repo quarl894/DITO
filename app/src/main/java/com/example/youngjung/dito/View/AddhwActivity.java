@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.youngjung.dito.BaseActivity;
 import com.example.youngjung.dito.Model.member;
@@ -34,6 +35,9 @@ public class AddhwActivity extends BaseActivity {
     com.prolificinteractive.materialcalendarview.MaterialCalendarView calendarView;
     TextView tv_date;
     boolean open = true;
+    TextView add_cnt;
+    ArrayList<member> add_member = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class AddhwActivity extends BaseActivity {
         btn_action = findViewById(R.id.btn_action);
         btn_set = findViewById(R.id.btn_set);
         String set_date = null;
+        add_cnt = findViewById(R.id.add_cnt);
 
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -63,6 +68,8 @@ public class AddhwActivity extends BaseActivity {
 
         Intent get_i = getIntent();
         m_list = (ArrayList<member>) get_i.getExtras().get("member");
+        add_member = (ArrayList<member>) get_i.getExtras().get("add_mem");
+        if(add_member!=null) add_cnt.setText(add_member.size()+"명");
 
         btn_action.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,10 +103,9 @@ public class AddhwActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+            case android.R.id.home: //toolbar의 back키 눌렀을 때 동작
                 finish();
                 return true;
-            }
         }
         return super.onOptionsItemSelected(item);
     }

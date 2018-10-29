@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,6 +31,7 @@ public class AddPersonActivity extends BaseActivity implements Add1Adapter.ItemC
     ArrayList<member> show_member = new ArrayList<>();
     member[] arr;
     Add1Adapter add1Adapter;
+    ArrayList<member> m;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,6 +45,10 @@ public class AddPersonActivity extends BaseActivity implements Add1Adapter.ItemC
 
         h_view = findViewById(R.id.hor_rview);
         v_view = findViewById(R.id.ver_rview);
+        m = new ArrayList<>();
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent i = getIntent();
         members = (ArrayList<member>) i.getExtras().get("mem");
@@ -61,7 +68,7 @@ public class AddPersonActivity extends BaseActivity implements Add1Adapter.ItemC
 
     @Override
     public void onItemClick(int pos, boolean chk, member person) {
-        ArrayList<member> m = new ArrayList<>();
+        m = new ArrayList<>();
         if(chk){
             arr[pos] = person;
         }else{
@@ -97,12 +104,25 @@ public class AddPersonActivity extends BaseActivity implements Add1Adapter.ItemC
 //    }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.study_menu, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+            case android.R.id.home:  //toolbar의 back키 눌렀을 때 동작
                 finish();
                 return true;
-            }
+            case R.id.ic_done :
+                Intent i = new Intent(AddPersonActivity.this, AddhwActivity.class);
+                i.putExtra("add_mem",m);
+                i.putExtra("member",members);
+                startActivity(i);
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
