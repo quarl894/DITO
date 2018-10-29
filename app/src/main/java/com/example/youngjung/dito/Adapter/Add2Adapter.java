@@ -1,4 +1,95 @@
 package com.example.youngjung.dito.Adapter;
 
-public class Add2Adapter {
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.member;
+import com.example.youngjung.dito.R;
+
+import java.util.ArrayList;
+
+public class Add2Adapter extends RecyclerView.Adapter<Add2Adapter.MyViewHolder>{
+    private ArrayList<member> item;
+    Context context;
+    //아이템 클릭시 실행 함수
+    private Add2Adapter.ItemClickListener2 mClickListener;
+
+    public Add2Adapter(ArrayList<member> item, Context context) {
+        this.item = item;
+        this.context = context;
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
+        TextView name;
+        ImageView img;
+
+        public MyViewHolder(@NonNull View view) {
+            super(view);
+            name = view.findViewById(R.id.name);
+            img = view.findViewById(R.id.img);
+
+        }
+    }
+
+
+    @NonNull
+    @Override
+    public Add2Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add2_profile,parent,false);
+        //context = viewGroup.getContext();
+        MyViewHolder vh = new MyViewHolder(v);
+        return vh;
+    }
+
+
+    @Override
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int i) {
+        final MyViewHolder myViewHolder = (MyViewHolder) holder;
+        String name = item.get(i).getName();
+        String img_url = item.get(i).getSubnail();
+        final int position = i;
+        DefaultAppliction.img_glide(context,img_url,myViewHolder.img);
+        myViewHolder.name.setText(name);
+
+        //클릭시 삭제 보류
+//        myViewHolder.img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(mClickListener!=null) mClickListener.onItemClick(position,item.get(position));
+//            }
+//        });
+    }
+
+    public void setClickListener(Add2Adapter.ItemClickListener2 itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    public interface ItemClickListener2 {
+        void onItemClick(int pos, member person);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
+    //아오 여기 size 안주고 기본값 0으로 줘서 계속 안나왔음. ㅅㅂ....
+    @Override
+    public int getItemCount() {
+        return item.size();
+    }
 }

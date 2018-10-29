@@ -26,18 +26,18 @@ public class AddActivity extends BaseActivity {
     Toolbar toolbar;
     TextView title_bar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        statusbar();
 
         View include = findViewById(R.id.include_layout);
 
         toolbar = include.findViewById(R.id.toolbar);
         title_bar = findViewById(R.id.toolbar_title);
         setSupportActionBar(toolbar);
-
+        statusbar();
 
         r_view = findViewById(R.id.r_view);
         r_view.setHasFixedSize(true);
@@ -45,7 +45,7 @@ public class AddActivity extends BaseActivity {
         r_view.setLayoutManager(mlayoutManager);
         context = getApplicationContext();
 
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+     //   getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent i = getIntent();
@@ -53,6 +53,8 @@ public class AddActivity extends BaseActivity {
 
         ProfileAdapter profileAdapter = new ProfileAdapter(members,getApplicationContext());
         r_view.setAdapter(profileAdapter);
+
+
     }
 
 

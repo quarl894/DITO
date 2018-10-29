@@ -14,9 +14,11 @@
         android:id="@+id/toolbar_title" />
 
     <android.support.v7.widget.RecyclerView
+        android:layout_marginLeft="16dp"
         android:id="@+id/hor_rview"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@+id/include_layout">
     </android.support.v7.widget.RecyclerView>
 

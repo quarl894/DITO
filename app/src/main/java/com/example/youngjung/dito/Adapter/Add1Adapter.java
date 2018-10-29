@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -19,18 +20,11 @@ import com.example.youngjung.dito.R;
 
 import java.util.ArrayList;
 
-public class Add1Adapter extends RecyclerView.Adapter<Add1Adapter.MyViewHolder> {
+public class Add1Adapter extends RecyclerView.Adapter<Add1Adapter.MyViewHolder>{
     private ArrayList<member> item;
     Context context;
     //아이템 클릭시 실행 함수
-    private ItemClick itemClick;
-    public interface ItemClick {
-        public void onClick(View view,int position);
-    }
-
-    public void setItemClick(ItemClick itemClick) {
-        this.itemClick = itemClick;
-    }
+    private Add1Adapter.ItemClickListener mClickListener;
 
     public Add1Adapter() {
     }
@@ -64,28 +58,38 @@ public class Add1Adapter extends RecyclerView.Adapter<Add1Adapter.MyViewHolder> 
         return vh;
     }
 
+
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int i) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, int i) {
         final MyViewHolder myViewHolder = (MyViewHolder) holder;
         String name = item.get(i).getName();
         String img_url = item.get(i).getSubnail();
-        final int pos = i;
+        final int position = i;
         DefaultAppliction.img_glide(context,img_url,myViewHolder.img);
         myViewHolder.name.setText(name);
-
         myViewHolder.btn_chk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
+                    if(mClickListener!=null) mClickListener.onItemClick(position,b,item.get(position));
                     myViewHolder.btn_chk.setButtonDrawable(R.drawable.check);
                 }
-                else myViewHolder.btn_chk.setButtonDrawable(R.drawable.btn_close);
+                else{
+                    if(mClickListener!=null) mClickListener.onItemClick(position,b,item.get(position));
+                    myViewHolder.btn_chk.setButtonDrawable(R.drawable.btn_close);
+                }
             }
         });
 
     }
 
+    public void setClickListener(Add1Adapter.ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
 
+    public interface ItemClickListener {
+        void onItemClick(int pos, boolean chk, member person);
+    }
 
 
     @Override
