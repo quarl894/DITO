@@ -28,6 +28,34 @@ public class Info implements Serializable{
         this.img3 = img3;
     }
 
+    public void setR_name(String r_name) {
+        this.r_name = r_name;
+    }
+
+    public void setS_name(String s_name) {
+        this.s_name = s_name;
+    }
+
+    public void setCnt(String cnt) {
+        this.cnt = cnt;
+    }
+
+    public void setImg_master(int img_master) {
+        this.img_master = img_master;
+    }
+
+    public void setImg1(String img1) {
+        this.img1 = img1;
+    }
+
+    public void setImg2(String img2) {
+        this.img2 = img2;
+    }
+
+    public void setImg3(String img3) {
+        this.img3 = img3;
+    }
+
     public String getR_name() {
         return r_name;
     }
