@@ -94,6 +94,7 @@ public class CustomDialog extends android.app.Dialog {
                                     }
                                     else if(num==1) fo.setImg2(arr.get(num).getSubnail());
                                     else fo.setImg3(arr.get(num).getSubnail());
+                                    num++;
                                 }
                                 fo.setCnt("+"+num);
                                 fo.setR_name((String) dataSnapshot.child("r_name").getValue());
