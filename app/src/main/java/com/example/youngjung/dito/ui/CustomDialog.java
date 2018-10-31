@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.youngjung.dito.DefaultAppliction;
+import com.example.youngjung.dito.Model.Info;
 import com.example.youngjung.dito.Model.member;
 import com.example.youngjung.dito.R;
 import com.example.youngjung.dito.View.MainActivity;
@@ -22,7 +23,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class CustomDialog extends android.app.Dialog {
     EditText edit;
@@ -30,6 +34,7 @@ public class CustomDialog extends android.app.Dialog {
     LinearLayout dialog_linear;
     TextView tv;
     DatabaseReference databaseReference;
+    Info fo = new Info();
 
     public CustomDialog(final Context context) {
         super(context);
@@ -75,7 +80,29 @@ public class CustomDialog extends android.app.Dialog {
                             if(dataSnapshot.getValue()!=null){
                                 databaseReference.child("room").child(name).child("own").child(key).child("member").child(DefaultAppliction.name())
                                         .setValue(new member(DefaultAppliction.name(), DefaultAppliction.get_nick(),DefaultAppliction.thumbnail()));
+                                databaseReference.child("room").child(DefaultAppliction.name()).child("nowon").child(name)
+                                        .child(key).setValue(0);
+
+
+                                ArrayList<member> arr = new ArrayList<>();
+                                Iterable<DataSnapshot> item = dataSnapshot.child("member").getChildren();
+                                int num =0;
+                                for(DataSnapshot child2 : item){
+                                    arr.add(child2.getValue(member.class));
+                                    if(num==0){
+                                        fo.setImg1(arr.get(num).getSubnail());
+                                    }
+                                    else if(num==1) fo.setImg2(arr.get(num).getSubnail());
+                                    else fo.setImg3(arr.get(num).getSubnail());
+                                    num++;
+                                }
+                                fo.setCnt("+"+num);
+                                fo.setR_name((String) dataSnapshot.child("r_name").getValue());
+                                fo.setS_name((String) dataSnapshot.child("s_name").getValue());
+
                                 Intent i = new Intent(getContext(), Study1Activity.class);
+                                i.putExtra("member",arr);
+                                i.putExtra("info",fo);
                                 getContext().startActivity(i);
                             }else{
                                 Toast.makeText(getContext(),"코드가 일치하지 않습니다",Toast.LENGTH_SHORT).show();

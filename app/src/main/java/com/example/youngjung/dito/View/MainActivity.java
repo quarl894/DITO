@@ -264,6 +264,7 @@ public class MainActivity extends BaseActivity {
                     }
                 }
                 }
+                get_View();
             }
 
             @Override
